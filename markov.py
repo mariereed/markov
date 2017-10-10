@@ -10,11 +10,15 @@ def open_and_read_file(file_path):
     the file's contents as one string of text.
     """
 
-    your_file = open(file_path).read()
-    return your_file
+    # text_file = open(file_path)
+    # text = text_file.read()
+    # text_file.close()
+    # return text
 
+    with open(file_path) as text_file:
+        text = text_file.read()
 
-file_as_string = open_and_read_file('green-eggs.txt')
+    return text
 
 
 def make_chains(file_as_string):
@@ -55,18 +59,23 @@ def make_chains(file_as_string):
             if words[i] == word1 and words[i + 1] == word2:
                 chains[(word1, word2)].append(words[i + 2])
 
+    #otherway
+    # for i in range(len(words)-2):
+    #     key = (words[i], words[i+1])
+    #     value = words[i+2]
+    #     chains[key] = chains.get(key, [])
+    #     chains[key].append(value)
+
     return chains
-
-
-my_chain = make_chains(file_as_string)
 
 
 def make_text(chain):
     """Return text from chains."""
 
     key = choice(chain.keys())
-    start_key1, start_key2 = key
-    words = [start_key1, start_key2]
+    # start_key1, start_key2 = key
+    # words = [start_key1, start_key2]
+    words = list(key)
 
     while True:
         next_word = choice(chain[key])
@@ -79,9 +88,9 @@ def make_text(chain):
     return " ".join(words)
 
 
+file_as_string = open_and_read_file('alice30.txt')
+my_chain = make_chains(file_as_string)
 print make_text(my_chain)
-
-
 
 
 
