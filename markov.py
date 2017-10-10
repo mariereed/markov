@@ -1,5 +1,6 @@
 """Generate Markov text from text files."""
 
+import sys
 from random import choice
 
 
@@ -88,7 +89,8 @@ def make_text(chain):
     return " ".join(words)
 
 
-file_as_string = open_and_read_file('alice30.txt')
+filename = sys.argv[1]
+file_as_string = open_and_read_file(filename)
 my_chain = make_chains(file_as_string)
 print make_text(my_chain)
 
