@@ -87,7 +87,6 @@ def make_text(chain):
     """Return text from chains."""
 
     start_key = choice(chain.keys())
-    print start_key
     # start_key1, start_key2 = key
     # words = [start_key1, start_key2]
     words = list(start_key)
@@ -96,12 +95,12 @@ def make_text(chain):
         next_word = choice(chain[start_key])
         if not next_word:
             break
-        start_key2 = list(start_key)
-        start_key2.pop(0)
-        start_key2.append(next_word)
-        print start_key2
+        start_key = list(start_key)
+        start_key.pop(0)
+        start_key.append(next_word)
         words.append(next_word)
         print words
+        start_key = tuple(start_key)
 
 
     return " ".join(words)
@@ -109,7 +108,7 @@ def make_text(chain):
 
 filename = sys.argv[1]
 file_as_string = open_and_read_file(filename)
-my_chain = make_chains(file_as_string, 5)
+my_chain = make_chains(file_as_string, 3)
 print make_text(my_chain)
 
 
