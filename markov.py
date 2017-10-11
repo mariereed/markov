@@ -83,10 +83,18 @@ def make_chains(file_as_string, n):
 
     return chains
 
-def make_text(chain):
+
+def make_text(chain, max_char_length):
     """Return text from chains."""
 
     start_key = choice(chain.keys())
+
+    while True:
+        if " ".join(start_key) != " ".join(start_key).capitalize():
+            start_key = choice(chain.keys())
+        else:
+            break
+
     # start_key1, start_key2 = key
     # words = [start_key1, start_key2]
     words = list(start_key)
@@ -99,9 +107,19 @@ def make_text(chain):
         start_key.pop(0)
         start_key.append(next_word)
         words.append(next_word)
-        print words
         start_key = tuple(start_key)
-
+        # print 'outside next_word', next_word
+        # print 'outside', start_key
+        if len(" ".join(words)) <= max_char_length and next_word[-1] in ['?', '.', '!']:
+            # print "last value for outside start_key", next_word
+            # print "last key inside", start_key
+            break
+        else:
+            # print "inside else statement key", start_key
+            # print 'inside else statement value', next_word
+            next_word = choice(chain[start_key])
+            # print "inside after reassign key", start_key
+            # print 'inside after reassign value', next_word
 
     return " ".join(words)
 
@@ -109,7 +127,7 @@ def make_text(chain):
 filename = sys.argv[1]
 file_as_string = open_and_read_file(filename)
 my_chain = make_chains(file_as_string, 3)
-print make_text(my_chain)
+print make_text(my_chain, 140)
 
 
 
